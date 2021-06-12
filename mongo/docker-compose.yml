@@ -1,0 +1,19 @@
+version: "3.3" # specify docker-compose version
+
+# Define the services/containers to be run
+services:
+  database: # name of service: database
+    image: mongo:4.0.3 # specify image to build container from
+    container_name: cascade_mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+    volumes:
+      - ./mongo:/home/mongodb
+      # Copies the files from /docker folder containing cong to /docker-entrypoint-initdb.d/ where init scrips for conainer run.
+      - ./mongo.docker/:/docker-entrypoint-initdb.d/
+      - ./mongo/db:/data/db
+    ports:
+      - "${MONGO_DATABASE_PORT}:27017" # specify port forewarding
