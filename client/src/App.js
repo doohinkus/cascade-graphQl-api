@@ -1,7 +1,7 @@
 import Layout from "./components/Layout";
 // import ACEvents from "./components/ACEvents";
 // import HeaterEvents from "./components/HeaterEvents";
-import HVACDatePicker from "./components/HVACDatePicker";
+import HVACWidget from "./components/HVACWidget";
 // import HVACEvents from "./components/HVACEvents";
 import Modal from "./components/Modal";
 
@@ -10,7 +10,7 @@ function App() {
     <div className="App">
       <Layout>
         {/* <ACEvents /> */}
-        <HVACDatePicker />
+        <HVACWidget />
         {/* <HeaterEvents /> */}
         {/* <HVACEvents /> */}
         <Modal />
