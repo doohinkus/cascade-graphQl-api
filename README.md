@@ -7,137 +7,112 @@ Technology used:
 - React / Modal / Grid / Chart
 - Docker / Docker Compose
 
-<!--
-### Run project with Docker
+# Run Locally
+
+## Step 1 Run Mongo in Docker Container
+
+Change into mongo directory
+**./mongo**
+Run this command.
+
 ```
 docker-compose build --no-cache
 ```
 
-```
-docker-compose up
-```
-
-Graphql server runs here: http://localhost:4000
-
-To stop project:
+And then run this command:
 
 ```
-docker-compose down --remove-orphans
+docker-compose u
 ```
 
-```
-docker exec -it mongo-seed_mongo_1 bash
-```
+This will launch and run the mongo database--creating shared folders in the **mongo** directory. This is how the data is persisted on subsequent runs.
 
-```
-docker-compose -f "./docker-compose.yml" up -d --build
-```
+## Step 2 Populate MongoDb
 
-## Run Project in development
+### Populate the mongo database
 
-cd into the **/mongo-apollo** directory
-Open terminal
-
-**/mongo-apollo**
+Change directories into **apollo-server**
+Run the following command to install node_modules
 
 ```
 npm install
 ```
 
-And then start mongo server
-**/mongo-apollo**
+After modules are installed run this command:
 
 ```
-docker-compose up mongodb
+npm run loadData
 ```
 
-This will build and run mongo. See directions below to stop mongo.
+This will load data into mongo db through mongoose. You should see a success message. Terminate the process. (This is klunky, I know--I had big issues trying to use docker to load the data. I am actively learning more about Docker so I can fix this issue.)
 
-## Populate db
+## Step 3 Run Apollo / Play with Queries
 
-With mongo running, run the following command in the **/mongo-apollo** folder.
-
-**/mongo-apollo**
-
-```
-npm run loadCSVtoMongoDB
+With mongo running. Change directories into **apollo-server**
+**apollo-server**
 
 ```
-
-There should be a success message in the console.
-With mongo running, run the following command in the **/mongo-apollo** folder.
-**/mongo-apollo**
-
-```
-npm run start
+npm run serve
 ```
 
-# If there is an issue with npm errors
+This will launch apollo server. There should be a success message in the console.
 
-**/mongo-apollo**
+You can use the apollo query tool to view results:
+http://localhost:4000
 
-```
-npm ci
-```
-
-And then try
-
-**/mongo-apollo**
+A few queries to try:
+This query shows results for AC events. You can add or remove fields. For instance, you can remove **hasTriggeredHeater** as a result, that field will not be present in the json response. Other avialable fields should auto suggest.
 
 ```
-npm run start
+   query {
+        HVACRange(startDate: "06/01/2020", endDate: "07/31/2020", type: "AC"){
+          Date
+          hasTriggeredHeater
+          hasTriggeredAC
+          HVACEventsCount
+        }
+      }
 ```
 
-## With both Apollo and Mongo running, play with GraphQl tool
+## Step 4 Run Client
 
-### Graphql queries
-
-http://localhost:4000/graphql
-
-Retrieve days the heater was activated.
+With apollo and mongo running, change directories into **client**
+**client**
+Run the following command to install node_modules
 
 ```
-query{
-    HeaterTriggeredDates{
-        Date
-    }
-}
+npm install
 ```
 
-You can also change the responses. For example, the folowing will add the hasTriggeredAC:
+After installing node_modules, run this command
 
 ```
-query{
-    HeaterTriggeredDates{
-        Date
-        hasTriggeredAC
-    }
-}
+npm start
 ```
 
-You can also click on the tabs to find other options.
-Retrieve days the AC was activated.
+The client will launch here:
+http://localhost:3000
+
+## Stopping Docker
+
+To stop mongo, terminate the process in the terminal.
+Then use this command:
 
 ```
-query{
-    ACTriggeredDates{
-        Date
-    }
-}
+docker-compose down --remove-orphans
 ```
 
-## How to stop the docker mongo instance:
+When you are ready to run the project again, you restart mongo:
 
 ```
-docker ps
+docker-compose up
 ```
 
-Find the running container, then type:
+If you did NOT delete the **mongo** and **mongo.docker** the data from the previous run should remain.
 
-```
-docker stop <first four characters of container id>
-```
+Todo:
 
-Run docker ps again to ensure the instance has stopped.
-
-Console should show updates. Stop the server. Then run the following command: -->
+- Tests
+- Improve data seeding
+- CI/CD process
+- UI (I rushed though UI, there is much to be improved--but the core features are present)
