@@ -9,11 +9,7 @@ function App() {
   return (
     <div className="App">
       <Layout>
-        {/* <ACEvents /> */}
         <HVACWidget />
-        {/* <HeaterEvents /> */}
-        {/* <HVACEvents /> */}
-        <Modal />
       </Layout>
     </div>
   );

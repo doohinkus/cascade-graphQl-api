@@ -1,0 +1,40 @@
+.container {
+  /* width: 80vw;
+  height: 100vh;
+  margin: auto; */
+  padding-top: 1rem;
+}
+.center {
+  text-align: center;
+}
+input,
+select {
+  padding: 0.25rem;
+}
+label {
+  display: block;
+  margin: 0.5rem 0;
+}
+button {
+  /* display: block; */
+  margin-top: 1rem;
+  background-color: #00a7c6;
+  border: none;
+  padding: 1rem 3rem;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+}
+.big {
+  font-size: 3rem;
+}
+span {
+  padding: 1rem;
+}
+.flex {
+  display: flex;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}

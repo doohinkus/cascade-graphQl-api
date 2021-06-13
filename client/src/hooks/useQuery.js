@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import queryGraphQl from "../graphql/async";
 
 export default function useQuery(query) {
@@ -8,10 +8,10 @@ export default function useQuery(query) {
     console.log(query);
     if (!query) return;
     try {
-      console.log("QUERY>>>>", query);
+      // console.log("QUERY>>>>", query);
       let customerData = await queryGraphQl(query);
       setCustomerData(customerData);
-      console.log("Data>>", customerData);
+      // console.log("Data>>", customerData);
     } catch (err) {
       console.log(err);
       setCustomerData([]);
