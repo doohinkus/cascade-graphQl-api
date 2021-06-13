@@ -1,30 +1,22 @@
 import { useEffect, useState } from "react";
-import queryGraphQl from "../async/queryData";
+import queryGraphQl from "../graphql/async";
 
-export default function useQuery({ query }) {
-  const [graphQlData, setGraphQlData] = useState([]);
+export default function useQuery(query) {
+  const [customersData, setCustomerData] = useState([]);
 
   const fetchData = async (query) => {
-    console.log(query)
+    console.log(query);
     if (!query) return;
     try {
-      //  console.log("QUERY",query)
-      let querieResults = await queryGraphQl({ query });
-      setGraphQlData(querieResults);
-      // console.log("Data>>", customerData);
-    }
-    catch (err) {
+      console.log("QUER", query);
+      let customerData = await queryGraphQl(query);
+      setCustomerData(customerData);
+      console.log("Data>>", customerData);
+    } catch (err) {
       console.log(err);
-      setGraphQlData([])
+      setCustomerData([]);
     }
+  };
 
-  }
-  // load data
-  useEffect(() => {
-
-    fetchData(query);
-
-  }, [query]);
-
-  return { graphQlData, fetchData };
-};
+  return { customersData, fetchData };
+}
