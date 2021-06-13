@@ -8,6 +8,7 @@ import useQuery from "../../hooks/useQuery";
 import {
   getHVACEventsByDay,
   getHVACEventsByRange,
+  getHVACRangeCount,
 } from "../../graphql/queries";
 
 export default function HVACWidget({ type }) {
@@ -16,17 +17,9 @@ export default function HVACWidget({ type }) {
       day,
       type,
     });
-    fetchData(query);
+    // rangeResults(query);
   }
-  function getQueryResultsByRange({ start, end, type }) {
-    let query = getHVACEventsByRange({
-      start,
-      end,
-      type,
-    });
-    console.log("sfsadf", query);
-    fetchData(query);
-  }
+
   const defaultStartDate = new Date(2020, 5, 1);
   const defaultEndDate = new Date(2020, 6, 31);
 
@@ -34,8 +27,16 @@ export default function HVACWidget({ type }) {
   const [endDate, setEndDate] = useState(defaultEndDate);
   const [HVACType, setHVACType] = useState("AC");
 
-  const { queryResults, fetchData } = useQuery();
-  // console.log("query", queryResults);
+  const [rangeResults, fetchData] = useQuery();
+  const [rangeResults2, fetchData2] = useQuery();
+  // const { rangeCount, fetchData } = useQuery();
+  console.log("1>>", rangeResults, " 2 >>", rangeResults2);
+
+  function getQueryResultsByRange({ start, end, type }) {
+    // console.log("sfsadf", query);
+    fetchData(getHVACEventsByRange({ start, end, type }));
+    fetchData2(getHVACRangeCount({ start, end, type }));
+  }
   return (
     <div>
       <h2>{HVACType} Activations</h2>

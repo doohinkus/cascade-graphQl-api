@@ -24,14 +24,6 @@ export function getHVACEventsByDay({ day, type }) {
  * THIS QUERY HITS GRAPHQL ENDPOINT RESULTS -> HVACRange:  Array ->  with zero or more results
  */
 export function getHVACEventsByRange({ start, end, type }) {
-  // return `query {
-  //   HVACRange(startDate:"06/02/2020", endDate:"${end}", type: "${type}"){
-  //     Date
-  //     hasTriggeredAC
-  //     hasTriggeredHeater
-  //     HVACEventsCount
-  //   }
-  // }`;
   return `
       query {
         HVACRange(startDate: "${start}", endDate: "${end}", type: "${type}"){
@@ -50,10 +42,10 @@ export function getHVACEventsByRange({ start, end, type }) {
  * @param {Object} type // "AC" OR "HEATER"
  * THIS QUERY HITS GRAPHQL ENDPOINT RESULTS -> HVACRangeCount:  Array ->  with zero or more results
  */
-export function getHVACCountByRange({ start, end, type }) {
+export function getHVACRangeCount({ start, end, type }) {
   return ` 
      query {
-        HVACRangeCount(startDate: ${start}, endDate: ${end}, type: ${type}){
+        HVACRangeCount(startDate: "${start}", endDate: "${end}", type: "${type}"){
          HVACCount
        }
     }`;

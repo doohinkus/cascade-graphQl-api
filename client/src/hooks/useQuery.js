@@ -8,7 +8,7 @@ export default function useQuery(query) {
     console.log(query);
     if (!query) return;
     try {
-      console.log("QUER", query);
+      console.log("QUERY>>>>", query);
       let customerData = await queryGraphQl(query);
       setCustomerData(customerData);
       console.log("Data>>", customerData);
@@ -18,5 +18,5 @@ export default function useQuery(query) {
     }
   };
 
-  return { customersData, fetchData };
+  return [customersData, fetchData];
 }
