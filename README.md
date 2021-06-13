@@ -12,7 +12,7 @@ Technology used:
 ## Step 1 Run Mongo in Docker Container
 
 Change into mongo directory
-**./mongo**
+**mongo**
 Run this command.
 
 ```
@@ -60,8 +60,11 @@ This will launch apollo server. There should be a success message in the console
 You can use the apollo query tool to view results:
 http://localhost:4000
 
+![Graphql](images/graphql.png)
+
 A few queries to try:
-This query shows results for AC events. You can add or remove fields. For instance, you can remove **hasTriggeredHeater** as a result, that field will not be present in the json response. Other avialable fields should auto suggest.
+
+The query below shows results for AC events. You can add or remove fields. For instance, you can remove **hasTriggeredHeater** as a result, that field will not be present in the json response. Other avialable fields should auto suggest.
 
 ```
    query {
@@ -75,6 +78,8 @@ This query shows results for AC events. You can add or remove fields. For instan
 ```
 
 ## Step 4 Run Client
+
+![Cascade](images/cascade.png)
 
 With apollo and mongo running, change directories into **client**
 **client**
@@ -116,3 +121,5 @@ Todo:
 - Improve data seeding
 - CI/CD process
 - UI (I rushed though UI, there is much to be improved--but the core features are present)
+
+* SECURITY-- I would NEVER include .env with senstive information in git. However, the .env filed in the project are needed to run locally--I did not want.
