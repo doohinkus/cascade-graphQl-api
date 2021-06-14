@@ -11,9 +11,9 @@ Stack used:
 
 ## Step 1 Run Mongo in Docker Container
 
-Change into mongo directory
+Change into mongo directory. Run the following command.
+
 **mongo**
-Run this command.
 
 ```
 docker-compose build --no-cache
@@ -32,7 +32,9 @@ This will launch and run the mongo database--creating shared folders in the **mo
 ### Populate the mongo database
 
 Change directories into **apollo-server**
-Run the following command to install node_modules
+Run the following command to install node_modules.
+
+**apollo-server**
 
 ```
 npm install
@@ -44,11 +46,12 @@ After modules are installed run this command:
 npm run loadData
 ```
 
-This will load data into mongo db through mongoose. You should see a success message. Terminate the process. (This is klunky, I know--I had big issues trying to use docker to load the data. I am actively learning more about Docker so I can fix this issue.)
+This will load data into mongo db through mongoose. You should see a success message. Terminate the process. (This is klunky--I had big issues trying to use docker to load the data. I am actively learning more about Docker so I can fix this issue.)
 
 ## Step 3 Run Apollo / Play with Queries
 
-With mongo running. Change directories into **apollo-server**
+With mongo running, change directories into **apollo-server**
+
 **apollo-server**
 
 ```
@@ -64,8 +67,6 @@ http://localhost:4000
 
 A few queries to try:
 
-The query below shows results for AC events. You can add or remove fields. For instance, you can remove **hasTriggeredHeater** as a result, that field will not be present in the json response. Other avialable fields should auto suggest.
-
 ```
    query {
         HVACRange(startDate: "06/01/2020", endDate: "07/31/2020", type: "AC"){
@@ -77,15 +78,17 @@ The query below shows results for AC events. You can add or remove fields. For i
       }
 ```
 
-Note: HVACEventsCount shows Heater and AC events for the range--that is why the number is high. **HVACRangeCount** is the count requested in the challenge.
+The query above shows results for AC events. You can add or remove fields. For instance, you can remove **hasTriggeredHeater** as a result, that field will not be present in the json response. Other avialable fields should auto suggest.
+
+Note: HVACEventsCount shows all AC events for the date range--that is why the number is high--it's activations by the hour. **HVACRangeCount** is the count requested in the challenge. It counts the days the HVAC was on at least once.
 
 ## Step 4 Run Client
 
 ![Cascade](images/cascade.png)
 
-With apollo and mongo running, change directories into **client**
+With apollo and mongo running, change directories into **client**. Run the following command to install node_modules.
+
 **client**
-Run the following command to install node_modules
 
 ```
 npm install
@@ -100,7 +103,7 @@ npm start
 The client will launch here:
 http://localhost:3000
 
-I have written some code to show the dates in the UI--but it's commented out. My idea was to show the dates, and then let the user click on the date, a modal woulll show the HVAC details for that date. I decided to focus more effort on Graphql because UI was extra. As a result, the queries and resolvers are written for the feature--but the UI is not.
+I have written some code to show the dates in the UI--but it's commented out. My idea was to show the dates, and then let the user click on the date, a modal would show the HVAC details for that date (details page). I decided to focus more effort on Graphql because UI was extra. As a result, the queries and resolvers are written for the feature--but the UI is not.
 
 ## Stopping Docker
 
@@ -121,9 +124,9 @@ If you did NOT delete the docker created sub folders -> **mongo** and **mongo.do
 
 Todo:
 
-- Unit and end to end Tests
+- More Unit Tests -- there are very few in the UI
 - Improve data seeding
 - CI/CD process (Would like to dockerize run the project in ngnix)
 - UI (I rushed though UI, there is much to be improved--but the core features are present)
 
-* SECURITY-- I would NEVER include .env with senstive information in git. However, the .env filed in the project are needed to run locally.
+* SECURITY-- I would NEVER include .env with senstive information in git. However, the .env filed in the project are needed to run locally. Also, the db is containerized, so it's not an issue in DEV, it would be huge gigantic issue in PROD.
