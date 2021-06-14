@@ -1,9 +1,5 @@
 import Layout from "./components/Layout";
-// import ACEvents from "./components/ACEvents";
-// import HeaterEvents from "./components/HeaterEvents";
 import HVACWidget from "./components/HVACWidget";
-// import HVACEvents from "./components/HVACEvents";
-import Modal from "./components/Modal";
 
 function App() {
   return (

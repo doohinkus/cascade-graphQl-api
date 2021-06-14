@@ -50,11 +50,13 @@ export default function HVACWidget({ type }) {
   return (
     <div className="container">
       {HVACType === "Heater" ? <Heater /> : <AC />}
-      <h2 className="center">{HVACType} Activations</h2>
-      <h3 className="center">
+      <h2 className="center" data-testid="activations">
+        {HVACType} Activations
+      </h2>
+      <h3 className="center" data-testid="dates">
         {formatDate(startDate)} to {formatDate(endDate)}
       </h3>
-      <h2 className="center big">
+      <h2 className="center big" data-testid="number of activations">
         {showCount ? (
           <MapArray
             array={countResults.HVACRangeCount}
@@ -76,6 +78,7 @@ export default function HVACWidget({ type }) {
           <label>Select HVAC Type (Heater or AC)</label>
           <select
             name="type"
+            data-testid="HVACSelectType"
             defaultValue={HVACType}
             onChange={handleHVACTypeChange}
           >
@@ -86,6 +89,7 @@ export default function HVACWidget({ type }) {
         <div>
           <label>Start Date</label>
           <DatePicker
+            data-testid="DatePickerStart"
             selected={startDate || defaultStartDate}
             minDate={defaultStartDate}
             maxDate={defaultEndDate}
@@ -95,6 +99,7 @@ export default function HVACWidget({ type }) {
         <div>
           <label>End Date</label>
           <DatePicker
+            data-testid="DatePickerEnd"
             selected={endDate || defaultEndDate}
             minDate={new Date("06-01-2020")}
             maxDate={new Date("07-31-2020")}
@@ -103,6 +108,7 @@ export default function HVACWidget({ type }) {
         </div>
         <button
           className="center"
+          data-testid="getResultsButton"
           onClick={() =>
             getQueryResultsByRange({
               start: formatDate(startDate),

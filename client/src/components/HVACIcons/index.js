@@ -1,9 +1,14 @@
 import heater from "./heater.png";
 import ac from "./ac.png";
 import "./HVACIcons.css";
+import { Fragment } from "react";
 
-function Image({ alt, src }) {
-  return <img src={src} alt={alt} className="center small" />;
+export function Image({ alt, src }) {
+  return (
+    <>
+      <img src={src} alt={alt} className="center small" />
+    </>
+  );
 }
 
 export function Heater() {
