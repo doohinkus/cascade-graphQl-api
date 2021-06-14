@@ -77,6 +77,8 @@ The query below shows results for AC events. You can add or remove fields. For i
       }
 ```
 
+Note: HVACEventsCount shows Heater and AC events for the range--that is why the number is high. **HVACRangeCount** is the count requested in the challenge.
+
 ## Step 4 Run Client
 
 ![Cascade](images/cascade.png)
