@@ -14,6 +14,9 @@ Stack used:
 Change into mongo directory. Run the following command.
 
 **mongo**
+```
+docker-compose pull
+```
 
 ```
 docker-compose build --no-cache
