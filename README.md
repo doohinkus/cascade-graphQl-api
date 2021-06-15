@@ -14,15 +14,19 @@ Stack used:
 Change into mongo directory. Run the following command.
 
 **mongo**
+Remove all docker containers:
+
+```
+docker system prune
+```
+
+Pull the image:
+
 ```
 docker-compose pull
 ```
 
-```
-docker-compose build --no-cache
-```
-
-And then run this command:
+Use the container:
 
 ```
 docker-compose up
