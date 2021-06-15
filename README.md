@@ -127,6 +127,6 @@ Todo:
 - More Unit Tests -- there are very few in the UI
 - Improve data seeding
 - CI/CD process (Would like to dockerize run the project in ngnix)
-- UI (I rushed though UI, there is much to be improved--but the core features are present)
+- UI, including basic date (I rushed though UI, there is much to be improved--but the core features are present)
 
 * SECURITY-- I would NEVER include .env with senstive information in git. However, the .env files in the project are needed to run locally. Also, the db is containerized, so it's not an issue in DEV, it would be huge gigantic issue in PROD.
