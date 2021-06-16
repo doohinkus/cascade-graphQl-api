@@ -7,22 +7,15 @@ import fs from "fs";
 
 async function addCsvToMongo() {
   await connectMongoDB();
-  // drop previous data
-
   const result = [];
   await fs
     .createReadStream("src/helper/history_data_hourly.csv")
     .pipe(csv())
     .on("data", (row) => {
-      // const date2 = new Date('1995-12-17T03:24:00');
-      // 07/11/2020 -> 2020-07-11T...
       let time = row["Date time"].split(" ")[1];
       let date = row["Date time"].split(" ")[0];
 
-      // date = `${date[2]}-${date[0]}-${date[1]}`;
-      // console.log(`${date}T${time}`, "...");
       let entry = {
-        // Date: row["Date time"].split(" ")[0],
         Date: date,
         Time: time,
         Name: row["Name"],
@@ -36,10 +29,7 @@ async function addCsvToMongo() {
     })
     .on("error", (err) => {
       console.log("Error ", err);
-      throw new Error(
-        "Error connecting to mongo. Is mongo running? docker ps",
-        err
-      );
+      throw new Error("Error connecting to mongo.", err);
     })
     .on("end", async () => {
       // add to mongo
@@ -47,9 +37,6 @@ async function addCsvToMongo() {
         await addEntriesToMongo(result);
         console.log(
           `Entries added to mongo db (${process.env.MONGO_INITDB_DATABASE}) on ${process.env.MONGO_DATABASE_HOST}:${process.env.MONGO_DATABASE_PORT}
-          Please start Apollo Server
-          npm start
-          Visit -> http://localhost:${process.env.PORT}
           `
         );
       } catch (err) {
@@ -90,7 +77,5 @@ async function addEntriesToMongo(array) {
 
 const runAddCsvToMongo = async () => {
   await addCsvToMongo();
-  console.log("done");
 };
 runAddCsvToMongo();
-// process.exit();

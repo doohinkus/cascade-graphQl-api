@@ -1,4 +1,4 @@
-import { gql } from "apollo-server-express";
+import { gql } from "apollo-server";
 // Query fields must match up with resolvers, including arguments
 export const typeDefs = gql`
   scalar Date

@@ -1,12 +1,12 @@
 import { ApolloServer, gql } from "apollo-server";
 require("dotenv").config();
 import { resolvers, typeDefs } from "./graphql";
-import connectMongoDB from "./mongo";
+import connectMongoDB from "./db_connect";
 
-const runApolloServer = async () => {
+const runServer = async (db, server) => {
   // catch error
   try {
-    await connectMongoDB().catch((err) => {
+    connectMongoDB().catch((err) => {
       console.log("Error connecting to mongo", err);
       throw new Error("Failed to connect to mongo", err);
     });
@@ -28,4 +28,4 @@ const runApolloServer = async () => {
   }
 };
 
-runApolloServer();
+runServer(connectMongoDB, "adsfds");
