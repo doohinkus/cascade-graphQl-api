@@ -5,6 +5,7 @@ Stack used:
 - GraphQl / Apollo Server
 - MongoDb
 - React
+- Docker
 
 ## Mongo is hosted on MongoDB Atlas Cloud
 

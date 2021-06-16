@@ -101,8 +101,8 @@ export default function HVACWidget({ type }) {
           <DatePicker
             data-testid="DatePickerEnd"
             selected={endDate || defaultEndDate}
-            minDate={new Date("06-01-2020")}
-            maxDate={new Date("07-31-2020")}
+            minDate={defaultStartDate}
+            maxDate={defaultEndDate}
             onChange={(date) => setEndDate(date)}
           />
         </div>

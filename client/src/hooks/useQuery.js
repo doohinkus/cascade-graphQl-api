@@ -5,7 +5,7 @@ export default function useQuery(query) {
   const [customersData, setCustomerData] = useState([]);
 
   const fetchData = async (query) => {
-    console.log(query);
+    // console.log(query);
     if (!query) return;
     try {
       // console.log("QUERY>>>>", query);
@@ -13,7 +13,7 @@ export default function useQuery(query) {
       setCustomerData(customerData);
       // console.log("Data>>", customerData);
     } catch (err) {
-      console.log(err);
+      // console.log("TROUBLE>>>>", err);
       setCustomerData([]);
     }
   };

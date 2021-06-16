@@ -10,7 +10,7 @@ export default async function queryGraphQl(query) {
       data: {
         query,
       },
-    }).catch((err) => console.log(err));
+    }).catch((err) => console.log("TROUBLEE>>>", err));
     const data = await request.data.data;
     console.log("query results>>", data);
     return data;
