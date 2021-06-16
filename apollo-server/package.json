@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "loadData": "node_modules/@babel/node/bin/babel-node.js src/helper",
+    "loadData": "node_modules/@babel/node/bin/babel-node.js src/helper/index.js",
     "dev": "node_modules/@babel/node/bin/babel-node.js --exec node_modules/@babel/node/bin/babel-node.js src/index.js",
     "serve": "node_modules/nodemon/bin/nodemon.js --exec node_modules/@babel/node/bin/babel-node.js src/index.js"
   },

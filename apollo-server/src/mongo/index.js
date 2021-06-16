@@ -4,9 +4,7 @@ import { CONSTANTS } from "../constants";
 
 export default async function connectMongoDB() {
   let connectionResult = "";
-
   console.log(`${CONSTANTS.mongoUri}`);
-
   try {
     await mongoose
       .connect(`${CONSTANTS.mongoUri || process.env.MONGO_URI}`, {

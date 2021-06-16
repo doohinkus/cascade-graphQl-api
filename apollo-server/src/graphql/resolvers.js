@@ -7,13 +7,14 @@ export const resolvers = {
     async HVACRangeCount(_, { startDate, endDate, type }) {
       let match = {
         Date: {
-          $gte: startDate,
-          $lte: endDate,
+          $gte: new Date(startDate),
+          $lte: new Date(endDate),
         },
         ...handleHAVACType(type),
       };
 
       let result = await HVAC.aggregate([
+        { $match: { ...match } },
         {
           $group: {
             _id: "$Date",
@@ -26,7 +27,6 @@ export const resolvers = {
             HVACEventsCount: { $sum: 1 },
           },
         },
-        { $match: { ...match } },
         { $count: "HVACCount" },
         { $sort: { _id: 1 } },
       ]);
@@ -36,13 +36,14 @@ export const resolvers = {
     async HVACRange(_, { startDate, endDate, type }) {
       let match = {
         Date: {
-          $gte: startDate,
-          $lte: endDate,
+          $gte: new Date(startDate),
+          $lte: new Date(endDate),
         },
         ...handleHAVACType(type),
       };
 
       let result = await HVAC.aggregate([
+        { $match: { ...match } },
         {
           $group: {
             _id: "$Date",
@@ -55,12 +56,17 @@ export const resolvers = {
             HVACEventsCount: { $sum: 1 },
           },
         },
-        { $match: { ...match } },
-        // { $count: "resultsCount" },
 
         { $sort: { _id: 1 } },
       ]);
-      // console.log(result);
+      console.log(
+        result,
+        startDate,
+        " ",
+        endDate,
+        " ",
+        new Date(startDate).toString()
+      );
       return result;
     },
 
@@ -94,52 +100,6 @@ export const resolvers = {
             },
           ];
     },
-    //   async HeaterTriggeredByDate(_, { day }) {
-    //     let match = {
-    //       hasTriggeredHeater: true,
-    //       Date: `${day}`,
-    //     };
-    //     let result = await HVAC.aggregate([
-    //       { $match: { ...match } },
-    //       {
-    //         $group: {
-    //           _id: "$Date",
-    //           Date: { $first: "$Date" },
-    //           Time: { $first: "$Time" },
-    //           Name: { $first: "$Name" },
-    //           Temperature: { $first: "$Temperature" },
-    //           hasTriggeredAC: { $first: "$hasTriggeredAC" },
-    //           hasTriggeredHeater: { $first: "$hasTriggeredHeater" },
-    //           count: { $sum: 1 },
-    //         },
-    //       },
-    //       { $sort: { _id: -1 } },
-    //     ]);
-    //     // console.log(result);
-    //     return result;
-    //   },
-    //   async ACTriggeredByDate(_, { day }) {
-    //     let match = {
-    //       hasTriggeredAC: true,
-    //       Date: `${day || "07/01/2020"}`,
-    //     };
-    //     let result = await HVAC.aggregate([
-    //       { $match: { ...match } },
-    //       {
-    //         $group: {
-    //           _id: "$Date",
-    //           Date: { $first: "$Date" },
-    //           Time: { $first: "$Time" },
-    //           Name: { $first: "$Name" },
-    //           Temperature: { $first: "$Temperature" },
-    //           hasTriggeredAC: { $first: "$hasTriggeredAC" },
-    //           hasTriggeredHeater: { $first: "$hasTriggeredHeater" },
-    //         },
-    //       },
-    //       { $sort: { _id: -1 } },
-    //     ]);
-    //     return result;
-    //   },
   },
 };
 

@@ -6,7 +6,7 @@ import fs from "fs";
 function CsvToArray() {
   const promises = [];
   return new Promise((resolve, reject) => {
-    fs.createReadStream("src/csvToGraphQl/history_data_hourly.csv")
+    fs.createReadStream("src/helper/history_data_hourly.csv")
       .pipe(csv())
 
       .on("data", async (row) => {
@@ -29,7 +29,7 @@ function CsvToArray() {
         // write data to json
         writeArrayToJson({
           array: data,
-          destination: "src/csvToGraphQl/hvac.json",
+          destination: "hvac.json",
         });
         resolve();
       });
