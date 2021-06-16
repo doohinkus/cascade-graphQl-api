@@ -4,10 +4,7 @@ export const typeDefs = gql`
   scalar Date
   type Query {
     HVAC: [HVACEvent!]!
-    # HeaterTriggeredByDate(day: String): [HVACEvent!]!
-    # ACTriggeredByDate(day: String): [HVACEvent!]!
     HVACByDay(day: String, type: String): [HVACEvent!]!
-    # Count: Count!
     HVACRange(startDate: Date, endDate: Date, type: String): [HVACEvent!]!
     HVACRangeCount(startDate: Date, endDate: Date, type: String): [Count!]!
   }
