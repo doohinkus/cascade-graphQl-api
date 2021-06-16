@@ -5,41 +5,12 @@ Stack used:
 - GraphQl / Apollo Server
 - MongoDb
 - React
-- Docker / Docker Compose
 
-# Run Locally
+## Mongo is hosted on MongoDB Atlas Cloud
 
-## Step 1 Run Mongo in Docker Container
+I removed the docker mongo dependency. The data is hosted on remote mongo cloud server. Here are the updated directions.
 
-Change into mongo directory. Run the following command.
-
-**mongo**
-Remove all docker containers:
-
-```
-docker system prune
-```
-
-Pull the image:
-
-```
-docker-compose pull
-```
-
-Use the container:
-
-```
-docker-compose up
-```
-
-This will launch and run the mongo database--creating shared folders in the **mongo** directory. This is how the data is persisted on subsequent runs.
-
-## Step 2 Populate MongoDb
-
-### Populate the mongo database
-
-Change directories into **apollo-server**
-Run the following command to install node_modules.
+## Step 1 Run Apollo
 
 **apollo-server**
 
@@ -47,17 +18,9 @@ Run the following command to install node_modules.
 npm install
 ```
 
-After modules are installed run this command:
+## Step 2 Run Apollo / Play with Queries
 
-```
-npm run loadData
-```
-
-This will load data into mongo db through mongoose. You should see a success message. Terminate the process. (This is klunky--I had big issues trying to use docker to load the data. I am actively learning more about Docker so I can fix this issue.)
-
-## Step 3 Run Apollo / Play with Queries
-
-With mongo running, change directories into **apollo-server**
+Change directories into **apollo-server**
 
 **apollo-server**
 
@@ -112,26 +75,9 @@ http://localhost:3000
 
 I have written some code to show the dates in the UI--but it's commented out. My idea was to show the dates, and then let the user click on the date, a modal would show the HVAC details for that date (details page). I decided to focus more effort on Graphql because UI was extra. As a result, the queries and resolvers are written for the feature--but the UI is not.
 
-## Stopping Docker
-
-To stop mongo, terminate the process in the terminal.
-Then use this command:
-
-```
-docker-compose down --remove-orphans
-```
-
-When you are ready to run the project again, you can restart mongo:
-
-```
-docker-compose up
-```
-
-If you did NOT delete the docker created sub folders -> **mongo** and **mongo.docker** then the data from the previous run should remain on subsequent runs.
-
 Todo:
 
-- More Unit Tests -- there are very few in the UI
+- More Unit Tests -- there are very few in the UI.
 - Improve data seeding
 - CI/CD process (Would like to dockerize run the project in ngnix)
 - UI, including basic date (I rushed though UI, there is much to be improved--but the core features are present)
