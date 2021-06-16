@@ -6,7 +6,7 @@ import { Fragment } from "react";
 export function Image({ alt, src }) {
   return (
     <>
-      <img src={src} alt={alt} className="center small" />
+      <img src={src} alt={alt} data-testid={alt} className="center small" />
     </>
   );
 }

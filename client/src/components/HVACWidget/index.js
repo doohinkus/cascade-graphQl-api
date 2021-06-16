@@ -14,14 +14,6 @@ import {
 import { Heater, AC } from "../HVACIcons";
 
 export default function HVACWidget({ type }) {
-  function getQueryResultsByDay(day, type) {
-    let query = getHVACEventsByDay({
-      day,
-      type,
-    });
-    // rangeResults(query);
-  }
-
   const defaultStartDate = new Date(2020, 5, 1);
   const defaultEndDate = new Date(2020, 6, 31);
 
@@ -29,12 +21,9 @@ export default function HVACWidget({ type }) {
   const [endDate, setEndDate] = useState(defaultEndDate);
   const [HVACType, setHVACType] = useState("AC");
   const [showCount, setShowCount] = useState(false);
-  const [showDates, setShowDates] = useState(false);
 
   const [rangeResults, fetchRangeResults] = useQuery();
   const [countResults, fetchCount] = useQuery();
-  // const { rangeCount, fetchRangeResults } = useQuery();
-  // console.log("1>>", rangeResults, " 2 >>", countResults);
 
   async function getQueryResultsByRange({ start, end, type }) {
     await fetchRangeResults(getHVACEventsByRange({ start, end, type }));

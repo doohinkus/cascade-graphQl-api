@@ -59,14 +59,7 @@ export const resolvers = {
 
         { $sort: { _id: 1 } },
       ]);
-      console.log(
-        result,
-        startDate,
-        " ",
-        endDate,
-        " ",
-        new Date(startDate).toString()
-      );
+
       return result;
     },
 
