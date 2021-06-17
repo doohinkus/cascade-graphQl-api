@@ -10,7 +10,7 @@ import HVACWidget from "./index.js";
 describe("HVACWidget", () => {
   beforeEach(() => {
     // setup a DOM element as a render target
-    let container = render(<HVACWidget />);
+    render(<HVACWidget />);
   });
 
   afterEach(cleanup);
