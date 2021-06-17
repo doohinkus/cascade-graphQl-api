@@ -37,7 +37,7 @@ export default function HVACWidget({ type }) {
   }
 
   return (
-    <div className="container">
+    <div className="container" data-testid="hvac-widget">
       {HVACType === "Heater" ? <Heater /> : <AC />}
       <h2 className="center" data-testid="activations">
         {HVACType} Activations
@@ -75,20 +75,20 @@ export default function HVACWidget({ type }) {
             <option value="Heater">Heater</option>
           </select>
         </div>
-        <div>
+        <div data-testid="DatePickerStart">
           <label>Start Date</label>
           <DatePicker
-            data-testid="DatePickerStart"
+            id="start-date"
             selected={startDate || defaultStartDate}
             minDate={defaultStartDate}
             maxDate={defaultEndDate}
             onChange={(date) => setStartDate(date)}
           />
         </div>
-        <div>
+        <div data-testid="DatePickerEnd">
           <label>End Date</label>
           <DatePicker
-            data-testid="DatePickerEnd"
+            id="end-date"
             selected={endDate || defaultEndDate}
             minDate={defaultStartDate}
             maxDate={defaultEndDate}
