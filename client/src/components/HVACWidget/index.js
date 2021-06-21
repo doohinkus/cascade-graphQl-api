@@ -2,14 +2,16 @@ import { useState } from "react";
 import MapArray from "../MapArray";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useQuery } from "@apollo/client";
 import { formatDate } from "../../helpers";
 import "./HVACWidget.css";
 
-import useQuery from "../../hooks/useQuery";
+// import useQuery from "../../hooks/useQuery";
 import {
   getHVACEventsByDay,
   getHVACEventsByRange,
   getHVACRangeCount,
+  HVAC_EVENTS_COUNT,
 } from "../../graphql/queries";
 import { Heater, AC } from "../HVACIcons";
 
@@ -21,21 +23,37 @@ export default function HVACWidget({ type }) {
   const [endDate, setEndDate] = useState(defaultEndDate);
   const [HVACType, setHVACType] = useState("AC");
   const [showCount, setShowCount] = useState(false);
+  const { data, refetch } = useQuery(HVAC_EVENTS_COUNT, {
+    variables: {
+      start: `${formatDate(startDate)}`,
+      end: `${formatDate(endDate)}`,
+      type: `${HVACType}`,
+    },
+  });
 
-  const [rangeResults, fetchRangeResults] = useQuery();
-  const [countResults, fetchCount] = useQuery();
+  // const [rangeResults, fetchRangeResults] = useQuery();
+  // const [countResults, fetchCount] = useQuery();
 
-  async function getQueryResultsByRange({ start, end, type }) {
-    await fetchRangeResults(getHVACEventsByRange({ start, end, type }));
-    await fetchCount(getHVACRangeCount({ start, end, type }));
-    await setShowCount(true);
-  }
+  // async function getQueryResultsByRange({ start, end, type }) {
+  //   await fetchRangeResults(getHVACEventsByRange({ start, end, type }));
+  //   await fetchCount(getHVACRangeCount({ start, end, type }));
+  //   await setShowCount(true);
+  // }
 
   async function handleHVACTypeChange(e) {
     await setHVACType(e.target.value);
     await setShowCount(false);
   }
+  function handleSubmit() {
+    // getQueryResultsByRange({
+    console.log(" COUNT", data?.HVACRangeCount);
 
+    //   start: formatDate(startDate),
+    //   end: formatDate(endDate),
+    //   type: HVACType,
+    // });
+    refetch();
+  }
   return (
     <div className="container" data-testid="hvac-widget">
       {HVACType === "Heater" ? <Heater /> : <AC />}
@@ -45,10 +63,10 @@ export default function HVACWidget({ type }) {
       <h3 className="center" data-testid="dates">
         {formatDate(startDate)} to {formatDate(endDate)}
       </h3>
-      <h2 className="center big" data-testid="number of activations">
-        {showCount ? (
+      <h2 className="center big" data-testid="number-activations">
+        {data?.HVACRangeCount.length ? (
           <MapArray
-            array={countResults.HVACRangeCount}
+            array={data?.HVACRangeCount}
             mapFunc={({ HVACCount }) => <div key={HVACCount}>{HVACCount}</div>}
           />
         ) : (
@@ -97,14 +115,8 @@ export default function HVACWidget({ type }) {
         </div>
         <button
           className="center"
-          data-testid="getResultsButton"
-          onClick={() =>
-            getQueryResultsByRange({
-              start: formatDate(startDate),
-              end: formatDate(endDate),
-              type: HVACType,
-            })
-          }
+          data-testid="hvac-results-button"
+          onClick={handleSubmit}
         >
           Submit
         </button>

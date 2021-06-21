@@ -1,3 +1,4 @@
+import { gql } from "@apollo/client";
 /**
  *
  * @param {Object} day  // "MM/DD/YEAR"
@@ -5,7 +6,7 @@
  * THIS QUERY HITS GRAPHQL ENDPOINT RESULTS -> HVACByDay:  Array ->  with zero or more results
  */
 export function getHVACEventsByDay({ day, type }) {
-  return `
+  return gql`
      {
           HVACByDay(day: "${day}", type: "${type}"){
           Date
@@ -23,8 +24,16 @@ export function getHVACEventsByDay({ day, type }) {
  * @param {Object} type // "AC" OR "HEATER"
  * THIS QUERY HITS GRAPHQL ENDPOINT RESULTS -> HVACRange:  Array ->  with zero or more results
  */
+
+export const HVAC_EVENTS_COUNT = gql`
+  query ($start: Date!, $end: Date!, $type: String!) {
+    HVACRangeCount(startDate: $start, endDate: $end, type: $type) {
+      HVACCount
+    }
+  }
+`;
 export function getHVACEventsByRange({ start, end, type }) {
-  return `
+  return gql`
       query {
         HVACRange(startDate: "${start}", endDate: "${end}", type: "${type}"){
           Date
@@ -43,7 +52,7 @@ export function getHVACEventsByRange({ start, end, type }) {
  * THIS QUERY HITS GRAPHQL ENDPOINT RESULTS -> HVACRangeCount:  Array ->  with zero or more results
  */
 export function getHVACRangeCount({ start, end, type }) {
-  return ` 
+  return gql` 
      query {
         HVACRangeCount(startDate: "${start}", endDate: "${end}", type: "${type}"){
          HVACCount

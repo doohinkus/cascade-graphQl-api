@@ -5,17 +5,39 @@ import {
   cleanup,
   act,
 } from "@testing-library/react";
+import { renderHook } from "@testing-library/react-hooks";
+import useQuery from "../../hooks/useQuery";
 import HVACWidget from "./index.js";
+// import { formatDate } from "../../helpers";
+import {
+  getHVACEventsByDay,
+  getHVACEventsByRange,
+  getHVACRangeCount,
+} from "../../graphql/queries";
+
+import { server } from "../../mocks/server";
+
+// Establish API mocking before all tests.
+beforeAll(() => server.listen());
+// Reset any request handlers that we may add during the tests,
+// so they don't affect other tests.
+afterEach(() => server.resetHandlers());
+// Clean up after the tests are finished.
+afterAll(() => server.close());
 
 describe("HVACWidget", () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     // setup a DOM element as a render target
+    // MUST mock the async functions or tests won't load
+    // Use this pattern for tests -> pull out methods, act, make assertions
+    await jest.mock("./index.js");
+
     render(<HVACWidget />);
   });
 
   afterEach(cleanup);
 
-  test("Renders without crashing", async () => {
+  test("Renders heading", async () => {
     let heading = await screen.queryAllByText(/AC Activations/);
     expect(heading).toHaveLength(1);
   });
@@ -58,6 +80,14 @@ describe("HVACWidget", () => {
       });
       const dateMessage = await screen.findByText(/06\/09\/2020/);
       expect(dateMessage).toBeInTheDocument();
+    });
+  });
+  test("Updates submit button is clicked", async () => {
+    await act(async () => {
+      const submit = await screen.findAllByTestId("hvac-results-button");
+      // console.log(submit);
+      fireEvent.click(submit[0]);
+      expect(await screen.findByTestId("activations")).toBeInTheDocument();
     });
   });
 });

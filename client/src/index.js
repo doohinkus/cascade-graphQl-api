@@ -2,13 +2,24 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import { ModalProvider } from "react-modal-hook";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  useQuery,
+  gql,
+} from "@apollo/client";
+
 import reportWebVitals from "./reportWebVitals";
+const client = new ApolloClient({
+  uri: "http://localhost:4000/graphql",
+  cache: new InMemoryCache(),
+});
 
 ReactDOM.render(
-  <ModalProvider>
+  <ApolloProvider client={client}>
     <App />
-  </ModalProvider>,
+  </ApolloProvider>,
   document.getElementById("root")
 );
 
