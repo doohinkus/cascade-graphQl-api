@@ -2,10 +2,11 @@
 
 Stack used:
 
-- GraphQl / Apollo Server
+- GraphQl / Apollo Server / Apollo Client
 - MongoDb
 - React
 - Docker
+- React Testing Library / Apollo Client Testing
 
 ## Mongo is hosted on MongoDB Atlas Cloud
 
