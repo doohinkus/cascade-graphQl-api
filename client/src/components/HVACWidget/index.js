@@ -28,10 +28,10 @@ export default function HVACWidget({ type }) {
   async function handleHVACTypeChange(e) {
     await setHVACType(e.target.value);
   }
-  function handleSubmit() {
+  async function handleSubmit() {
     // console.log(" COUNT", data?.HVACRangeCount);
 
-    refetch();
+    await refetch();
   }
   return (
     <div className="container" data-testid="hvac-widget">
