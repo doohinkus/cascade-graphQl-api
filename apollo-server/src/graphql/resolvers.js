@@ -5,16 +5,16 @@ export const resolvers = {
   Query: {
     HVAC: async () => await HVAC.find({}),
     async HVACRangeCount(_, { startDate, endDate, type }) {
-      let match = {
-        Date: {
-          $gte: new Date(startDate),
-          $lte: new Date(endDate),
+      return await handleAggregate([
+        {
+          $match: {
+            Date: {
+              $gte: new Date(startDate),
+              $lte: new Date(endDate),
+            },
+            ...handleHAVACType(type),
+          },
         },
-        ...handleHAVACType(type),
-      };
-
-      let result = await HVAC.aggregate([
-        { $match: { ...match } },
         {
           $group: {
             _id: "$Date",
@@ -30,20 +30,18 @@ export const resolvers = {
         { $count: "HVACCount" },
         { $sort: { _id: 1 } },
       ]);
-      // console.log(result);
-      return result;
     },
     async HVACRange(_, { startDate, endDate, type }) {
-      let match = {
-        Date: {
-          $gte: new Date(startDate),
-          $lte: new Date(endDate),
+      return await handleAggregate([
+        {
+          $match: {
+            Date: {
+              $gte: new Date(startDate),
+              $lte: new Date(endDate),
+            },
+            ...handleHAVACType(type),
+          },
         },
-        ...handleHAVACType(type),
-      };
-
-      let result = await HVAC.aggregate([
-        { $match: { ...match } },
         {
           $group: {
             _id: "$Date",
@@ -59,17 +57,11 @@ export const resolvers = {
 
         { $sort: { _id: 1 } },
       ]);
-
-      return result;
     },
 
     async HVACByDay(_, { day, type }) {
-      let match = {
-        ...handleHAVACType(type),
-        Date: `${day}`,
-      };
-      let result = await HVAC.aggregate([
-        { $match: { ...match } },
+      let result = await handleAggregate([
+        { $match: { ...handleHAVACType(type), Date: new Date(day) } },
         {
           $group: {
             _id: "$Date",
@@ -84,7 +76,6 @@ export const resolvers = {
         },
         { $sort: { _id: -1 } },
       ]);
-      // console.log(result.length);
       return result.length > 0
         ? result
         : [
@@ -96,6 +87,14 @@ export const resolvers = {
   },
 };
 
+async function handleAggregate(aggregate) {
+  try {
+    let result = await HVAC.aggregate(aggregate);
+    return result;
+  } catch (err) {
+    throw new Error("Error ", err);
+  }
+}
 function handleHAVACType(type) {
   // Default to Heater
   return type.toLowerCase() === "ac"
