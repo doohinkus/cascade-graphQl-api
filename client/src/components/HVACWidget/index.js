@@ -6,14 +6,9 @@ import { useQuery } from "@apollo/client";
 import { formatDate } from "../../helpers";
 import "./HVACWidget.css";
 
-// import useQuery from "../../hooks/useQuery";
-import {
-  getHVACEventsByDay,
-  getHVACEventsByRange,
-  getHVACRangeCount,
-  HVAC_EVENTS_COUNT,
-} from "../../graphql/queries";
+import { HVAC_EVENTS_COUNT } from "../../graphql/queries";
 import { Heater, AC } from "../HVACIcons";
+import Button from "../Button";
 
 export default function HVACWidget({ type }) {
   const defaultStartDate = new Date(2020, 5, 1);
@@ -22,7 +17,6 @@ export default function HVACWidget({ type }) {
   const [startDate, setStartDate] = useState(defaultStartDate);
   const [endDate, setEndDate] = useState(defaultEndDate);
   const [HVACType, setHVACType] = useState("AC");
-  const [showCount, setShowCount] = useState(false);
   const { data, refetch } = useQuery(HVAC_EVENTS_COUNT, {
     variables: {
       start: `${formatDate(startDate)}`,
@@ -31,27 +25,12 @@ export default function HVACWidget({ type }) {
     },
   });
 
-  // const [rangeResults, fetchRangeResults] = useQuery();
-  // const [countResults, fetchCount] = useQuery();
-
-  // async function getQueryResultsByRange({ start, end, type }) {
-  //   await fetchRangeResults(getHVACEventsByRange({ start, end, type }));
-  //   await fetchCount(getHVACRangeCount({ start, end, type }));
-  //   await setShowCount(true);
-  // }
-
   async function handleHVACTypeChange(e) {
     await setHVACType(e.target.value);
-    await setShowCount(false);
   }
   function handleSubmit() {
-    // getQueryResultsByRange({
-    console.log(" COUNT", data?.HVACRangeCount);
+    // console.log(" COUNT", data?.HVACRangeCount);
 
-    //   start: formatDate(startDate),
-    //   end: formatDate(endDate),
-    //   type: HVACType,
-    // });
     refetch();
   }
   return (
@@ -67,7 +46,11 @@ export default function HVACWidget({ type }) {
         {data?.HVACRangeCount.length ? (
           <MapArray
             array={data?.HVACRangeCount}
-            mapFunc={({ HVACCount }) => <div key={HVACCount}>{HVACCount}</div>}
+            mapFunc={({ HVACCount }) => (
+              <div data-testid="HVAC-count" key={HVACCount}>
+                {HVACCount}
+              </div>
+            )}
           />
         ) : (
           "?"
@@ -113,13 +96,14 @@ export default function HVACWidget({ type }) {
             onChange={(date) => setEndDate(date)}
           />
         </div>
-        <button
+        <Button handleSubmit={handleSubmit}>Submit</Button>
+        {/* <button
           className="center"
           data-testid="hvac-results-button"
           onClick={handleSubmit}
         >
           Submit
-        </button>
+        </button> */}
       </div>
     </div>
   );
