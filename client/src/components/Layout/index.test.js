@@ -1,7 +1,7 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import Layout from "./index.js";
 
-describe("HVACWidget", () => {
+describe("Layout", () => {
   test("Renders without crashing", () => {
     render(<Layout />);
   });

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import MapArray from "../MapArray";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useQuery } from "@apollo/client";
@@ -8,19 +7,20 @@ import "./HVACWidget.css";
 
 import { HVAC_EVENTS_COUNT } from "../../graphql/queries";
 import { Heater, AC } from "../HVACIcons";
-import Button from "../Button";
 
-export default function HVACWidget({ type }) {
+export default function HVACWidget() {
   const defaultStartDate = new Date(2020, 5, 1);
   const defaultEndDate = new Date(2020, 6, 31);
 
-  const [startDate, setStartDate] = useState(defaultStartDate);
-  const [endDate, setEndDate] = useState(defaultEndDate);
+  const [dates, setDates] = useState({
+    startDate: defaultStartDate,
+    endDate: defaultEndDate,
+  });
   const [HVACType, setHVACType] = useState("AC");
-  const { data, refetch } = useQuery(HVAC_EVENTS_COUNT, {
+  const { data } = useQuery(HVAC_EVENTS_COUNT, {
     variables: {
-      start: `${formatDate(startDate)}`,
-      end: `${formatDate(endDate)}`,
+      start: `${formatDate(dates.startDate)}`,
+      end: `${formatDate(dates.endDate)}`,
       type: `${HVACType}`,
     },
   });
@@ -28,11 +28,7 @@ export default function HVACWidget({ type }) {
   async function handleHVACTypeChange(e) {
     await setHVACType(e.target.value);
   }
-  async function handleSubmit() {
-    // console.log(" COUNT", data?.HVACRangeCount);
 
-    await refetch();
-  }
   return (
     <div className="container" data-testid="hvac-widget">
       {HVACType === "Heater" ? <Heater /> : <AC />}
@@ -40,21 +36,10 @@ export default function HVACWidget({ type }) {
         {HVACType} Activations
       </h2>
       <h3 className="center" data-testid="dates">
-        {formatDate(startDate)} to {formatDate(endDate)}
+        {formatDate(dates.startDate)} to {formatDate(dates.endDate)}
       </h3>
       <h2 className="center big" data-testid="number-activations">
-        {data?.HVACRangeCount.length ? (
-          <MapArray
-            array={data?.HVACRangeCount}
-            mapFunc={({ HVACCount }) => (
-              <div data-testid="HVAC-count" key={HVACCount}>
-                {HVACCount}
-              </div>
-            )}
-          />
-        ) : (
-          "?"
-        )}
+        <span>{data?.HVACRangeCount[0]?.HVACCount || "?"}</span>
       </h2>
       {/* Shows dates
       <div className="flex flex-wrap center">
@@ -80,30 +65,22 @@ export default function HVACWidget({ type }) {
           <label>Start Date</label>
           <DatePicker
             id="start-date"
-            selected={startDate || defaultStartDate}
+            selected={dates.startDate || defaultStartDate}
             minDate={defaultStartDate}
             maxDate={defaultEndDate}
-            onChange={(date) => setStartDate(date)}
+            onChange={(date) => setDates({ ...dates, startDate: date })}
           />
         </div>
         <div data-testid="DatePickerEnd">
           <label>End Date</label>
           <DatePicker
             id="end-date"
-            selected={endDate || defaultEndDate}
+            selected={dates.endDate || defaultEndDate}
             minDate={defaultStartDate}
             maxDate={defaultEndDate}
-            onChange={(date) => setEndDate(date)}
+            onChange={(date) => setDates({ ...dates, endDate: date })}
           />
         </div>
-        <Button handleSubmit={handleSubmit}>Submit</Button>
-        {/* <button
-          className="center"
-          data-testid="hvac-results-button"
-          onClick={handleSubmit}
-        >
-          Submit
-        </button> */}
       </div>
     </div>
   );

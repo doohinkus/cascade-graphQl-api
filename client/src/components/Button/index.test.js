@@ -7,7 +7,7 @@ import { formatDate } from "../../helpers";
 
 import HVACWidget from "../HVACWidget";
 
-describe("HVACWidget", () => {
+describe.skip("HVACWidget", () => {
   test("Renders without crashing", async () => {
     const handleClick = jest.fn();
     await act(async () => {
