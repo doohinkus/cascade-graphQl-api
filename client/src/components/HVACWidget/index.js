@@ -1,10 +1,9 @@
 import { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { useQuery } from "@apollo/client";
 import { formatDate } from "../../helpers";
 import "./HVACWidget.css";
-
+import SelectDate from "../SelectDate";
+import HvacType from "../HVACType";
 import { HVAC_EVENTS_COUNT } from "../../graphql/queries";
 import { Heater, AC } from "../HVACIcons";
 
@@ -49,7 +48,7 @@ export default function HVACWidget() {
         />
       </div> */}
       <div className="center">
-        <div>
+        {/* <div>
           <label>Select HVAC Type (Heater or AC)</label>
           <select
             name="type"
@@ -60,27 +59,33 @@ export default function HVACWidget() {
             <option value="AC">AC</option>
             <option value="Heater">Heater</option>
           </select>
-        </div>
-        <div data-testid="DatePickerStart">
-          <label>Start Date</label>
-          <DatePicker
-            id="start-date"
-            selected={dates.startDate || defaultStartDate}
-            minDate={defaultStartDate}
-            maxDate={defaultEndDate}
-            onChange={(date) => setDates({ ...dates, startDate: date })}
-          />
-        </div>
-        <div data-testid="DatePickerEnd">
-          <label>End Date</label>
-          <DatePicker
-            id="end-date"
-            selected={dates.endDate || defaultEndDate}
-            minDate={defaultStartDate}
-            maxDate={defaultEndDate}
-            onChange={(date) => setDates({ ...dates, endDate: date })}
-          />
-        </div>
+        </div> */}
+        <HvacType
+          name="type"
+          data-testid="HVACSelectType"
+          defaultValue={HVACType}
+          onChange={handleHVACTypeChange}
+        />
+
+        <SelectDate
+          label="Start Date"
+          testId="DatePickerStart"
+          id="start-date"
+          selected={dates.startDate || defaultStartDate}
+          minDate={defaultStartDate}
+          maxDate={defaultEndDate}
+          onChange={(date) => setDates({ ...dates, startDate: date })}
+        />
+
+        <SelectDate
+          label="End Date"
+          testId="DatePickerEnd"
+          id="end-date"
+          selected={dates.endDate || defaultEndDate}
+          minDate={defaultStartDate}
+          maxDate={defaultEndDate}
+          onChange={(date) => setDates({ ...dates, endDate: date })}
+        />
       </div>
     </div>
   );

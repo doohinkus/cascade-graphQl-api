@@ -1,13 +1,13 @@
 import { render, screen, fireEvent, act } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
 
-import Button from "./index.js";
+import HvacType from "./index.js";
 import { HVAC_EVENTS_COUNT } from "../../graphql/queries.js";
 import { formatDate } from "../../helpers";
 
 import HVACWidget from "../HVACWidget";
 
-describe.skip("HVACWidget", () => {
+describe.skip("HvacType", () => {
   test("Renders without crashing", async () => {
     const handleClick = jest.fn();
     await act(async () => {
@@ -44,8 +44,8 @@ describe.skip("HVACWidget", () => {
         <HVACWidget />
       </MockedProvider>
     );
-    const button = await findByText(/Submit/);
-    await fireEvent.click(button);
+    const select = await findByText(/ac/i);
+    await fireEvent.click(select);
     // await fireEvent.click(button);
     expect(screen.getByText(`4`)).toBeInTheDocument();
   });
