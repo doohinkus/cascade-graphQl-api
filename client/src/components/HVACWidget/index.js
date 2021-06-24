@@ -30,7 +30,7 @@ export default function HVACWidget() {
 
   return (
     <div className="container" data-testid="hvac-widget">
-      {HVACType === "Heater" ? <Heater /> : <AC />}
+      {HVACType === "heater" ? <Heater /> : <AC />}
       <h2 className="center" data-testid="activations">
         {HVACType} Activations
       </h2>
@@ -62,8 +62,10 @@ export default function HVACWidget() {
         </div> */}
         <HvacType
           name="type"
-          data-testid="HVACSelectType"
+          id="type"
+          testId="HVACSelectType"
           defaultValue={HVACType}
+          // value={HVACType}
           onChange={handleHVACTypeChange}
         />
 
