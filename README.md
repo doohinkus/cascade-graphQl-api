@@ -79,7 +79,12 @@ I have written some code to show the dates in the UI--but it's commented out. My
 
 Todo:
 
-- More Unit Tests -- there are very few in the UI.
+- ~~More Unit Tests -- there are very few in the UI.~~ 100% unit test converage
+
+```
+npm run test:cov
+```
+
 - Improve data seeding
 - CI/CD process (Would like to dockerize run the project in ngnix)
 - UI, including basic date (I rushed though UI, there is much to be improved--but the core features are present)
