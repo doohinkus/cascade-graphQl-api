@@ -32,7 +32,7 @@ export default function HVACWidget() {
     <div className="container" data-testid="hvac-widget">
       {HVACType === "heater" ? <Heater /> : <AC />}
       <h2 className="center" data-testid="activations">
-        {HVACType} Activations
+        {HVACType.toUpperCase()} Activations
       </h2>
       <h3 className="center" data-testid="dates">
         {formatDate(dates.startDate)} to {formatDate(dates.endDate)}
