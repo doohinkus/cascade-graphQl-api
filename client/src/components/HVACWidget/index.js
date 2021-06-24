@@ -40,32 +40,13 @@ export default function HVACWidget() {
       <h2 className="center big" data-testid="number-activations">
         <span>{data?.HVACRangeCount[0]?.HVACCount || "?"}</span>
       </h2>
-      {/* Shows dates
-      <div className="flex flex-wrap center">
-        <MapArray
-          array={rangeResults.HVACRange}
-          mapFunc={({ Date }) => <span key={Date}>{Date}</span>}
-        />
-      </div> */}
+
       <div className="center">
-        {/* <div>
-          <label>Select HVAC Type (Heater or AC)</label>
-          <select
-            name="type"
-            data-testid="HVACSelectType"
-            defaultValue={HVACType}
-            onChange={handleHVACTypeChange}
-          >
-            <option value="AC">AC</option>
-            <option value="Heater">Heater</option>
-          </select>
-        </div> */}
         <HvacType
           name="type"
           id="type"
           testId="HVACSelectType"
           defaultValue={HVACType}
-          // value={HVACType}
           onChange={handleHVACTypeChange}
         />
 
@@ -73,7 +54,7 @@ export default function HVACWidget() {
           label="Start Date"
           testId="DatePickerStart"
           id="start-date"
-          selected={dates.startDate || defaultStartDate}
+          selected={dates.startDate}
           minDate={defaultStartDate}
           maxDate={defaultEndDate}
           onChange={(date) => setDates({ ...dates, startDate: date })}
@@ -83,7 +64,7 @@ export default function HVACWidget() {
           label="End Date"
           testId="DatePickerEnd"
           id="end-date"
-          selected={dates.endDate || defaultEndDate}
+          selected={dates.endDate}
           minDate={defaultStartDate}
           maxDate={defaultEndDate}
           onChange={(date) => setDates({ ...dates, endDate: date })}

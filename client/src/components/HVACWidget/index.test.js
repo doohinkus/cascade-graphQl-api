@@ -5,14 +5,9 @@ import {
   cleanup,
   act,
 } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import HVACWidget from "./index.js";
-import { formatDate } from "../../helpers";
-
-import { HVAC_EVENTS_COUNT } from "../../graphql/queries";
 
 import { MockedProvider } from "@apollo/client/testing";
-import HvacType from "../HVACType";
 describe("HVACWidget", () => {
   beforeEach(async () => {
     // setup a DOM element as a render target
@@ -33,6 +28,7 @@ describe("HVACWidget", () => {
     let heading = await screen.queryAllByText(/AC Activations/);
     expect(heading).toHaveLength(1);
   });
+
   test("Renders date range", async () => {
     let dateRange = await screen.getByText(/06\/01\/2020 to 07\/31\/2020/);
     expect(dateRange).toBeInTheDocument();
