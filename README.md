@@ -80,6 +80,7 @@ I have written some code to show the dates in the UI--but it's commented out. My
 Todo:
 
 - ~~More Unit Tests -- there are very few in the UI.~~ 100% unit test converage
+  **client**
 
 ```
 npm run test:cov
