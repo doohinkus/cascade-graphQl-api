@@ -1,3 +1,7 @@
+# Master branch is the first iteration, here is the second:
+
+https://github.com/doohinkus/cascade-graphQl-api/tree/apollo-client
+
 ## Cascade GraphQl Api Project in Progress
 
 Stack used:
