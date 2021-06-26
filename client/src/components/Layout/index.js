@@ -1,11 +1,9 @@
 import "./Layout.css";
-import cascade_logo from "./cascade-energy-logo-2.png";
+import Header from "./Header";
 function Layout({ children }) {
   return (
     <div>
-      <header>
-        <img src={cascade_logo} alt="cascade energy" />
-      </header>
+      <Header />
       {children}
     </div>
   );

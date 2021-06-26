@@ -1,8 +1,8 @@
 import { render } from "@testing-library/react";
-import Layout from "./index.js";
+import SelectDate from "./index.js";
 
-describe("Layout", () => {
+describe("SelectDate", () => {
   test("Renders without crashing", () => {
-    render(<Layout />);
+    render(<SelectDate />);
   });
 });

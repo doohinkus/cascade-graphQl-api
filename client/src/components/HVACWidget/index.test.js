@@ -6,8 +6,8 @@ import {
   act,
 } from "@testing-library/react";
 import HVACWidget from "./index.js";
-import { MockedProvider } from "@apollo/client/testing";
 
+import { MockedProvider } from "@apollo/client/testing";
 describe("HVACWidget", () => {
   beforeEach(async () => {
     // setup a DOM element as a render target
@@ -15,7 +15,7 @@ describe("HVACWidget", () => {
     // Use this pattern for tests -> pull out methods, act, make assertions
     await jest.mock("./index.js");
 
-    render(
+    const { getByTestId } = render(
       <MockedProvider>
         <HVACWidget />
       </MockedProvider>
@@ -28,6 +28,7 @@ describe("HVACWidget", () => {
     let heading = await screen.queryAllByText(/AC Activations/);
     expect(heading).toHaveLength(1);
   });
+
   test("Renders date range", async () => {
     let dateRange = await screen.getByText(/06\/01\/2020 to 07\/31\/2020/);
     expect(dateRange).toBeInTheDocument();
@@ -38,14 +39,6 @@ describe("HVACWidget", () => {
       await fireEvent.change(HVACSelect, { target: { value: "ac" } });
       const acIcon = await screen.getByTestId("ac icon");
       expect(acIcon).toBeInTheDocument();
-    });
-  });
-  test("Shows heater icon when heater is selected", async () => {
-    await act(async () => {
-      const HVACSelect = await screen.getByTestId("HVACSelectType");
-      await fireEvent.change(HVACSelect, { target: { value: "Heater" } });
-      const heaterIcon = await screen.getByTestId("heater icon");
-      expect(heaterIcon).toBeInTheDocument();
     });
   });
 
@@ -69,4 +62,19 @@ describe("HVACWidget", () => {
       expect(dateMessage).toBeInTheDocument();
     });
   });
+});
+
+describe("Select", () => {});
+test("Shows ac icon when heater is selected", async () => {
+  const { getByText, getByDisplayValue, getByTestId } = await render(
+    <MockedProvider>
+      <HVACWidget />
+    </MockedProvider>
+  );
+
+  fireEvent.change(getByTestId("HVACSelectType"), {
+    target: { value: "heater" },
+  });
+
+  expect(getByTestId("heater icon")).toBeInTheDocument();
 });
