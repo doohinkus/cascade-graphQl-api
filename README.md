@@ -1,5 +1,6 @@
 ## Cascade GraphQl Api Project in Progress
 
+[![Build Status](https://travis-ci.com/doohinkus/cascade-graphQl-api.svg?branch=master)](https://travis-ci.com/doohinkus/cascade-graphQl-api)
 Stack used:
 
 - GraphQl / Apollo Server / Apollo Client
