@@ -19,10 +19,9 @@ jobs:
         working-directory: ./client
         run: npm i && npm run test:cov
       - name: Test Report
-        uses: dorny/test-reporter@v1
-        if: success() || failure()    # run this step even if previous step failed
+        uses: vebr/jest-lcov-reporter@v0.2.0
         with:
-          name: JEST Tests            # Name of the check run which will be created
-          path: coverage/*.xml    # Path to test results
-          reporter: lcov        # Format of test results
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          lcov-file: ./coverage/lcov.info
+
   
