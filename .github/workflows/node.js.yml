@@ -20,8 +20,9 @@ jobs:
         run: npm i && npm run test:cov
       - name: Test Report
         uses: vebr/jest-lcov-reporter@v0.2.0
+        
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          lcov-file: ./coverage/lcov.info
+          lcov-file: ./client/coverage/lcov.info
 
   
