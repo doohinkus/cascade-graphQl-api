@@ -18,7 +18,8 @@ jobs:
       - name: Setup and run tests
         working-directory: ./client
         run: npm i && npm run test:cov
-        
+      - name: Report
+        working-directory: ./client
       - uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
