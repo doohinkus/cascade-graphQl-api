@@ -18,9 +18,10 @@ jobs:
       - name: Setup and run tests
         working-directory: ./client
         run: npm i && npm run test:cov
-      - name: Report
-        working-directory: ./client
-      - uses: EnricoMi/publish-unit-test-result-action@v1
-        if: always()
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()    # run this step even if previous step failed
         with:
-          files: coverage/*.xml
+          name: JEST Tests            # Name of the check run which will be created
+          path: ./client/coverage/*.xml    # Path to test results
+          reporter: lcov        # Format of test results
