@@ -5,7 +5,8 @@ import "./HVACWidget.css";
 import SelectDate from "../SelectDate";
 import HvacType from "../HVACType";
 import { HVAC_EVENTS_COUNT } from "../../graphql/queries";
-import { Heater, AC } from "../HVACIcons";
+import HVACDatesDisplay from "../HVACDatesDisplay";
+import { DisplayHVACIcon } from "../HVACIcons";
 
 export default function HVACWidget() {
   const defaultStartDate = new Date(2020, 5, 1);
@@ -30,16 +31,8 @@ export default function HVACWidget() {
 
   return (
     <div className="container" data-testid="hvac-widget">
-      {HVACType === "heater" ? <Heater /> : <AC />}
-      <h2 className="center" data-testid="activations">
-        {HVACType.toUpperCase()} Activations
-      </h2>
-      <h3 className="center" data-testid="dates">
-        {formatDate(dates.startDate)} to {formatDate(dates.endDate)}
-      </h3>
-      <h2 className="center big" data-testid="number-activations">
-        <span>{data?.HVACRangeCount[0]?.HVACCount || "?"}</span>
-      </h2>
+      <DisplayHVACIcon HVACType={HVACType} />
+      <HVACDatesDisplay HVACType={HVACType} dates={dates} data={data} />
 
       <div className="center">
         <HvacType

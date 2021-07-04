@@ -25,3 +25,7 @@ export function AC() {
     </div>
   );
 }
+
+export function DisplayHVACIcon({ HVACType }) {
+  return <>{HVACType === "heater" ? <Heater /> : <AC />}</>;
+}

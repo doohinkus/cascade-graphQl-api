@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { Image, Heater, AC } from "./index.js";
+import { Image, Heater, AC, DisplayHVACIcon } from "./index.js";
 
 describe("Image", () => {
   test('Image must have src = "/heater.png" and alt = "Heater"', () => {
@@ -20,6 +20,14 @@ describe("Heater", () => {
 describe("AC", () => {
   test('Image must have src = "/heater.png" and alt = "Heater"', () => {
     render(<AC src="ac.png" alt="ac icon" />);
+    const logo = screen.getByRole("img");
+    expect(logo).toHaveAttribute("src", "ac.png");
+    expect(logo).toHaveAttribute("alt", "ac icon");
+  });
+});
+describe("DisplayHVACIcon", () => {
+  test("Displays ac icon when type is ac", () => {
+    render(<DisplayHVACIcon HVACType="ac" />);
     const logo = screen.getByRole("img");
     expect(logo).toHaveAttribute("src", "ac.png");
     expect(logo).toHaveAttribute("alt", "ac icon");
