@@ -1,6 +1,8 @@
 .small {
-  height: 10%;
-  width: 10%;
+  max-height: 20%;
+  min-height: 20%;
+  min-width: 20%;
+  max-width: 20%;
 }
 img {
   display: block;

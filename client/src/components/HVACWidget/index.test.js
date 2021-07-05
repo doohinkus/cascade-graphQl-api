@@ -6,6 +6,7 @@ import {
   act,
 } from "@testing-library/react";
 import HVACWidget from "./index.js";
+import Context from "../../context/HVACContext";
 
 import { MockedProvider } from "@apollo/client/testing";
 describe("HVACWidget", () => {
@@ -14,10 +15,13 @@ describe("HVACWidget", () => {
     // MUST mock the async functions or tests won't load
     // Use this pattern for tests -> pull out methods, act, make assertions
     await jest.mock("./index.js");
+    // await jest.mock("../../context/HVACContext");
 
     const { getByTestId } = render(
       <MockedProvider>
-        <HVACWidget />
+        <Context>
+          <HVACWidget />
+        </Context>
       </MockedProvider>
     );
   });
@@ -68,7 +72,9 @@ describe("Select", () => {});
 test("Shows ac icon when heater is selected", async () => {
   const { getByText, getByDisplayValue, getByTestId } = await render(
     <MockedProvider>
-      <HVACWidget />
+      <Context>
+        <HVACWidget />
+      </Context>
     </MockedProvider>
   );
 

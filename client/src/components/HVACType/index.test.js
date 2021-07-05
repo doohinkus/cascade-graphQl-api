@@ -1,9 +1,7 @@
 import { render, screen, fireEvent, act } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
 
-import HvacType from "./index.js";
-import { HVAC_EVENTS_COUNT } from "../../graphql/queries.js";
-import { formatDate } from "../../helpers";
+import Context from "../../context/HVACContext";
 
 import HVACWidget from "../HVACWidget";
 
@@ -12,7 +10,9 @@ describe("HVACWidget", () => {
     await act(async () => {
       const { getByText, getByTestId } = render(
         <MockedProvider>
-          <HVACWidget />
+          <Context>
+            <HVACWidget />
+          </Context>
         </MockedProvider>
       );
       fireEvent.change(await screen.getByTestId("HVACSelectType"), {
@@ -28,7 +28,9 @@ describe("HVACWidget", () => {
     await act(async () => {
       const { getByText, getByTestId } = render(
         <MockedProvider>
-          <HVACWidget />
+          <Context>
+            <HVACWidget />
+          </Context>
         </MockedProvider>
       );
       fireEvent.change(await screen.getByTestId("HVACSelectType"), {
@@ -72,7 +74,9 @@ describe("HVACWidget", () => {
   test("Displays default result", async () => {
     const { findByText, findByTestId } = render(
       <MockedProvider>
-        <HVACWidget />
+        <Context>
+          <HVACWidget />
+        </Context>
       </MockedProvider>
     );
     const defaultValue = await screen.findByTestId("number-activations");

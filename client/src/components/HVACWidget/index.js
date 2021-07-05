@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useContext } from "react";
 import { useQuery } from "@apollo/client";
 import { formatDate } from "../../helpers";
 import "./HVACWidget.css";
@@ -7,16 +7,12 @@ import HvacType from "../HVACType";
 import { HVAC_EVENTS_COUNT } from "../../graphql/queries";
 import HVACDatesDisplay from "../HVACDatesDisplay";
 import { DisplayHVACIcon } from "../HVACIcons";
+import { HVACContext } from "../../context/HVACContext";
 
 export default function HVACWidget() {
-  const defaultStartDate = new Date(2020, 5, 1);
-  const defaultEndDate = new Date(2020, 6, 31);
+  const { setDates, setHVACType, dates, HVACType } = useContext(HVACContext);
+  // console.log(dates.startDate);
 
-  const [dates, setDates] = useState({
-    startDate: defaultStartDate,
-    endDate: defaultEndDate,
-  });
-  const [HVACType, setHVACType] = useState("AC");
   const { data } = useQuery(HVAC_EVENTS_COUNT, {
     variables: {
       start: `${formatDate(dates.startDate)}`,
@@ -31,10 +27,10 @@ export default function HVACWidget() {
 
   return (
     <div className="container" data-testid="hvac-widget">
-      <DisplayHVACIcon HVACType={HVACType} />
-      <HVACDatesDisplay HVACType={HVACType} dates={dates} data={data} />
-
       <div className="center">
+        <DisplayHVACIcon HVACType={HVACType} />
+        <HVACDatesDisplay HVACType={HVACType} dates={dates} data={data} />
+
         <HvacType
           name="type"
           id="type"
@@ -48,8 +44,8 @@ export default function HVACWidget() {
           testId="DatePickerStart"
           id="start-date"
           selected={dates.startDate}
-          minDate={defaultStartDate}
-          maxDate={defaultEndDate}
+          minDate={dates.defaultStartDate}
+          maxDate={dates.defaultEndDate}
           onChange={(date) => setDates({ ...dates, startDate: date })}
         />
 
@@ -58,8 +54,8 @@ export default function HVACWidget() {
           testId="DatePickerEnd"
           id="end-date"
           selected={dates.endDate}
-          minDate={defaultStartDate}
-          maxDate={defaultEndDate}
+          minDate={dates.defaultStartDate}
+          maxDate={dates.defaultEndDate}
           onChange={(date) => setDates({ ...dates, endDate: date })}
         />
       </div>
