@@ -1,4 +1,4 @@
-## Cascade GraphQl Api Project in Progress
+## HVAC GraphQl Api Project in Progress
 
 [![Build Status](https://travis-ci.com/doohinkus/cascade-graphQl-api.svg?branch=master)](https://travis-ci.com/doohinkus/cascade-graphQl-api)
 
@@ -58,7 +58,7 @@ Note: HVACEventsCount shows all AC events for the date range--that is why the nu
 
 ## Step 4 Run Client
 
-![Cascade](images/cascade.png)
+<!-- ![Cascade](images/cascade.png) -->
 
 With apollo and mongo running, change directories into **client**. Run the following command to install node_modules.
 
@@ -89,7 +89,7 @@ npm run test:cov
 ```
 
 - Improve data seeding
-- CI/CD process (Would like to dockerize run the project in ngnix)
-- UI, including basic date (I rushed though UI, there is much to be improved--but the core features are present)
+- ~~CI/CD process (Would like to dockerize run the project in ngnix)~~ Added git ci test hook and travis ci test results. Still need to add nginx.
+- ~~UI, including basic date ~~ Refactoring UI - greyframe
 
-* SECURITY-- I would NEVER include .env with senstive information in git. However, the .env files in the project are needed to run locally. Also, the db is containerized, so it's not an issue in DEV, it would be huge gigantic issue in PROD.
+* ~~SECURITY~~ -- Removed the info in .env. Project will no longer work in local because the connection to the cloud db is no longer present.
