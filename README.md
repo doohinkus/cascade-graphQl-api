@@ -90,6 +90,6 @@ npm run test:cov
 
 - Improve data seeding
 - ~~CI/CD process (Would like to dockerize run the project in ngnix)~~ Added git ci test hook and travis ci test results. Still need to add nginx.
-- ~~UI, including basic date ~~ Refactoring UI - greyframe
+- ~~UI, including basic date~~ Refactoring UI - greyframe
 
 * ~~SECURITY~~ -- Removed the info in .env. Project will no longer work in local because the connection to the cloud db is no longer present.
