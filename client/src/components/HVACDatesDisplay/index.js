@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { DisplayHVACIcon } from "../HVACIcons";
 import { formatDate } from "../../helpers";
 
 export default function HVACDatesDisplay({
@@ -21,9 +22,11 @@ export default function HVACDatesDisplay({
           </span>
         )}
       </h2>
+
       <h2 className="center" data-testid="activations">
         {HVACType.toUpperCase()} Activations
       </h2>
+      <DisplayHVACIcon HVACType={HVACType} />
       <h3 className="center" data-testid="dates">
         {formatDate(dates.startDate)} to {formatDate(dates.endDate)}
       </h3>

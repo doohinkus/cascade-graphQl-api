@@ -1,8 +1,5 @@
 .small {
-  max-height: 20%;
-  min-height: 20%;
-  min-width: 20%;
-  max-width: 20%;
+  height: 5rem;
 }
 img {
   display: block;

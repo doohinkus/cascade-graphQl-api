@@ -6,7 +6,7 @@ import SelectDate from "../SelectDate";
 import HvacType from "../HVACType";
 import { HVAC_EVENTS_COUNT } from "../../graphql/queries";
 import HVACDatesDisplay from "../HVACDatesDisplay";
-import { DisplayHVACIcon } from "../HVACIcons";
+// import { DisplayHVACIcon } from "../HVACIcons";
 import { HVACContext } from "../../context/HVACContext";
 
 export default function HVACWidget() {
@@ -28,7 +28,6 @@ export default function HVACWidget() {
   return (
     <div className="container" data-testid="hvac-widget">
       <div className="center">
-        <DisplayHVACIcon HVACType={HVACType} />
         <HVACDatesDisplay
           HVACType={HVACType}
           loading={loading}
