@@ -13,7 +13,7 @@ export default function HVACWidget() {
   const { setDates, setHVACType, dates, HVACType } = useContext(HVACContext);
   // console.log(dates.startDate);
 
-  const { data } = useQuery(HVAC_EVENTS_COUNT, {
+  const { loading, error, data } = useQuery(HVAC_EVENTS_COUNT, {
     variables: {
       start: `${formatDate(dates.startDate)}`,
       end: `${formatDate(dates.endDate)}`,
@@ -29,7 +29,13 @@ export default function HVACWidget() {
     <div className="container" data-testid="hvac-widget">
       <div className="center">
         <DisplayHVACIcon HVACType={HVACType} />
-        <HVACDatesDisplay HVACType={HVACType} dates={dates} data={data} />
+        <HVACDatesDisplay
+          HVACType={HVACType}
+          loading={loading}
+          error={error}
+          dates={dates}
+          data={data}
+        />
 
         <HvacType
           name="type"

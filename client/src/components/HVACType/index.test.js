@@ -81,6 +81,6 @@ describe("HVACWidget", () => {
     );
     const defaultValue = await screen.findByTestId("number-activations");
     expect(defaultValue).toBeInTheDocument();
-    expect(screen.getByText("?")).toBeInTheDocument();
+    expect(screen.getByText("Error")).toBeInTheDocument();
   });
 });

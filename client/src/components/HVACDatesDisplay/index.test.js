@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import HVACDatesDisplay from "./index.js";
 
 describe("HVACDatesDisplay", () => {
-  test("Displays correct dates", () => {
+  test("Renders without crashing", () => {
     // data?.HVACRangeCount[0]?.HVACCount
     render(
       <HVACDatesDisplay
@@ -14,8 +14,35 @@ describe("HVACDatesDisplay", () => {
         data={{ HVACRangeCount: [{ HVACCount: 10 }] }}
       />
     );
-    // const logo = screen.getByRole("img");
-    // expect(logo).toHaveAttribute("src", "heater.png");
-    // expect(logo).toHaveAttribute("alt", "Heater image");
+  });
+  test("Displays error", async () => {
+    render(
+      <HVACDatesDisplay
+        HVACType="ac"
+        error={true}
+        dates={{
+          startDate: new Date("06-02-2020"),
+          endDate: new Date("07-02-2020"),
+        }}
+        data={{ HVACRangeCount: [{ HVACCount: 10 }] }}
+      />
+    );
+    const error = screen.getByTestId("error");
+    expect(error.textContent).toBe("Error");
+  });
+  test("Displays no results", async () => {
+    render(
+      <HVACDatesDisplay
+        HVACType="ac"
+        error={false}
+        dates={{
+          startDate: new Date("06-02-2020"),
+          endDate: new Date("07-02-2020"),
+        }}
+        data={{ HVACRangeCount: [{ HVACCount: 0 }] }}
+      />
+    );
+    const results = screen.getByTestId("results");
+    expect(results.textContent).toBe("No results");
   });
 });
